@@ -25,7 +25,7 @@ const MedicalTest_1 = subject("MedicalTest", {
   createdAt: new Date().setHours(0, 0, 0),
 });
 
-console.log(MedicalTest_1.__caslSubjectType__);
+// console.log(MedicalTest_1.__caslSubjectType__);
 
 const MedicalTest_2 = subject("MedicalTest", {
   id: 2,
@@ -62,9 +62,15 @@ const MedicalTest_5 = subject("MedicalTest", {
 // * =============================
 // *  Roles <--> permissions
 // * -----------------------------
-function defineAdminRules({ can }, user) {}
+function defineAdminRules({ can }, user) {
+  can("manage", "all");
+}
+
 function defineDoctorRules({ can }, user) {}
-function defineUserRules({ can }, user) {}
+function defineUserRules({ can }, user) {
+  can(["read", "create", "update", "delete"], "MedicalTest", {UserId: user.id});
+}
+
 function defineAnonymousRules({ can }, user) {}
 
 // * =============================
